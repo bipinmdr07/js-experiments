@@ -17,14 +17,14 @@
 }
 
 .slideshow-wrapper{
-    width: 9800px;
+    width: 12600px;
 }
 
 .slide {
     width: 100%;
     height: 600px;
     overflow: hidden;
-    margin-left: 0px;
+    margin-left: -1400px;
 }
 
 .slide img {
