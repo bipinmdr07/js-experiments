@@ -1,0 +1,27 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.screen {
+    width: 800px;
+    height: 500px;
+    background: gray;
+    position: relative;
+}
+
+#ball {
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.control-ball {
+    width: 50px;
+    height: 50px;
+    background: blue;
+    border-radius: 50%;
+    position: absolute;
+}
