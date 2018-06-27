@@ -1,0 +1,15 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+#scatter-plot-graph {
+    width: 500px;
+    height: 500px;
+    background-color: red;
+    position: relative;
+}
+
+.point:hover {
+    cursor: pointer;
+}
