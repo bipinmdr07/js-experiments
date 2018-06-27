@@ -1,6 +1,6 @@
-function animate(max_stars){
+function animate(maxStars){
     var stars = "";
-    var stop_condition = max_stars;
+    var stopCondition = maxStars;
     var increment = true;
     var i = 0;
     setInterval(function(){
@@ -12,16 +12,16 @@ function animate(max_stars){
             i -= 1;
         }
 
-        if (i === stop_condition){
+        if (i === stopCondition){
             increment = !increment;
-            if (stop_condition === max_stars){
-                stop_condition = 1;
+            if (stopCondition === maxStars){
+                stopCondition = 1;
             } else {
-                stop_condition = max_stars;
+                stopCondition = maxStars;
             }
         }
         console.log(stars);
     }, 100);
 }
 
-animate(20);
+animate(10);
