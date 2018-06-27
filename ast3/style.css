@@ -32,6 +32,10 @@
     float: left;
 }
 
+.indicator {
+    text-align: center;
+}
+
 .align-left {
     width: 50%;
     float: left;

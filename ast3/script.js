@@ -1,16 +1,18 @@
 var slide = document.getElementsByClassName("slide")[0];
 
-var previous_btn = document.getElementsByTagName('button')[0];
-var next_btn = document.getElementsByTagName('button')[1];
+var previousBtn = document.getElementsByTagName('button')[0];
+var nextBtn = document.getElementsByTagName('button')[1];
 
-var min_limit = 0;
+var imageLocation = window.location.href + "images/";
+
+var minLimit = 0;
 var margin = -1400;
-var max_limit = -11200;
+var maxLimit = -11200;
 var factor = 20;
 
 
-function animate(left_translation){
-    if (left_translation){
+function animate(leftTranslation){
+    if (leftTranslation){
         margin -= factor;
     } else {
         margin += factor;
@@ -26,37 +28,23 @@ function animate(left_translation){
                 margin = -1400;
             }
         } else {
-            if(left_translation && margin >= max_limit){
+            if(leftTranslation && margin >= maxLimit){
                 // next_button clicked
                 margin -= factor;
-            } else if (!left_translation && margin <= min_limit){
+            } else if (!leftTranslation && margin <= minLimit){
                 // previous button clicked
                 margin += factor;
             }
-            // } else if (margin > max_limit){
-            //     margin -= factor;
-            // } else {
-            //     margin += factor;
-            // }
             slide.style.marginLeft = margin.toString() + "px";
         }
     }, 1);
 }
 
-previous_btn.onclick = function() {
-    // if (margin != min_limit){
-    //     margin += 1400;
-    //     slide.style.marginLeft = margin.toString() + "px";
-    // }
+previousBtn.onclick = function() {
     animate(false);
 }
 
-next_btn.onclick = function() {
-    // if (margin != max_limit){
-    //     margin -= 1400;
-
-    //     slide.style.marginLeft = margin.toString() + "px";
-    // }
+nextBtn.onclick = function() {
     animate(true);
 }
 
