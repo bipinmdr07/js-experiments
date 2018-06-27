@@ -1,15 +1,15 @@
 var graph = document.getElementsByClassName("scatter-plot-graph")[0];
 
-function generate_point(){
-    var point = {left: Math.ceil(Math.random() * 500), top: Math.ceil(Math.random() * 500)};
+function generatePoint(){
+    var point = {left: Math.ceil(Math.random() * 490), top: Math.ceil(Math.random() * 490)};
     return point;
 }
 
 function plot(coordinate){
     var point = document.createElement('div');
     point.className = "point";
-    point.style.width = "5px";
-    point.style.height = "5px";
+    point.style.width = "10px";
+    point.style.height = "10px";
     point.style.borderRadius = "50%";
     point.style.position = "absolute";
     point.style.backgroundColor = "black";
@@ -22,29 +22,25 @@ function plot(coordinate){
 
 // generate 100 points
 var i = 100;
-var points_array = [];
+var pointsArray = [];
 while(i > 0) {
-    points_array.push(generate_point());
+    pointsArray.push(generatePoint());
     i--;
 }
 
-points_array.forEach((coordinate) => {
+pointsArray.forEach((coordinate) => {
     plot(coordinate);
 });
 
 var ul = document.getElementById("nodes-container");
-console.log(ul);
-var black_dots = document.getElementsByClassName("point");
+var blackDots = document.getElementsByClassName("point");
 
 for (i = 0; i <  100; i++){
-    black_dots[i].onclick = function() {
+    blackDots[i].onclick = function() {
         var coordinate = document.createElement('li');
-        // console.log(this.style.left + ', ' + this.style.top);
-        coordinate.innerHTML = this.style.left + ', ' + this.style.top;
+        coordinate.innerHTML = "x: " + this.style.left + ', ' + 'y: ' + this.style.top;
         ul.appendChild(coordinate);
         this.remove();
-
-        // document.body.appendChild(coordinate);
     };
 }
 
