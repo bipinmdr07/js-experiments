@@ -73,8 +73,8 @@ function collisionWithWall(ant){
 }
 
 function collisionWithAnotherAnt(ants){
-    for(var i = 0; i < numberOfAnts - 1; i++){
-        for(var j = i + 1; j < numberOfAnts; j++){
+    for(var i = 0; i < ants.length - 1; i++){
+        for(var j = i + 1; j < ants.length; j++){
             if (Math.abs(ants[i].x - ants[j].x) * 2 < (ants[i].size + ants[j].size) && Math.abs(ants[i].y - ants[j].y) * 2 < (ants[i].size + ants[j].size)){
                 ants[i].dx = velocities[Math.floor(Math.random() * 3)];
                 ants[i].dy = velocities[Math.floor(Math.random() * 3)];
@@ -88,13 +88,16 @@ function collisionWithAnotherAnt(ants){
 // killing the ants
 $ants.forEach(function(ant){
     ant.onclick = function() {
+        var index = $ants.indexOf(ant);
+        $ants.splice(index, 1);
+        ants.splice(index, 1);
         this.remove();
     }
 });
 
 setInterval(function() {
     collisionWithAnotherAnt(ants);
-    for(var i = 0; i < numberOfAnts; i++){
+    for(var i = 0; i < $ants.length; i++){
         updateAntPosition(ants[i], $ants[i]);
         collisionWithWall(ants[i]);
     }
