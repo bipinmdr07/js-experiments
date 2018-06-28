@@ -21,12 +21,12 @@ var screen = {
 
 var antSize = 10;
 var velocities = [-1, 0, 1];
-var speed = 2;
+var speed = 1;
 
 var ants = [];
 var $ants = [];
-// generate 40 ants
-var numberOfAnts = 40;
+// generate 500 ants
+var numberOfAnts = 500;
 
 for(var i = 0; i < numberOfAnts; i++){
     var ant = createAnt(Math.floor(Math.random() * (screen.maxX - antSize)), Math.floor(Math.random() * (screen.maxY - antSize)), velocities[Math.floor(Math.random() * 3)], velocities[Math.floor(Math.random() * 3)], antSize, "black");
@@ -101,4 +101,4 @@ setInterval(function() {
         updateAntPosition(ants[i], $ants[i]);
         collisionWithWall(ants[i]);
     }
-}, 100);
+}, 1);
