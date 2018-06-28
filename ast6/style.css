@@ -1,0 +1,15 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.board {
+    width: 900px;
+    height: 600px;
+    background-color: bisque;
+    position: absolute;
+}
+
+.ant:hover {
+    cursor: pointer;
+}
