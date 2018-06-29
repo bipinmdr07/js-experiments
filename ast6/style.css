@@ -4,10 +4,13 @@
 }
 
 .board {
-    width: 900px;
-    height: 600px;
     background-color: bisque;
+    position: relative;
+}
+
+.ant {
     position: absolute;
+    background-color: black;
 }
 
 .ant:hover {

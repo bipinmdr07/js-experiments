@@ -20,7 +20,7 @@ var screen = {
 }
 
 var antSize = 10;
-var velocities = [-1, 0, 1];
+var velocities = [-1, 1];
 var speed = 1;
 
 var ants = [];
@@ -29,7 +29,7 @@ var $ants = [];
 var numberOfAnts = 500;
 
 for(var i = 0; i < numberOfAnts; i++){
-    var ant = createAnt(Math.floor(Math.random() * (screen.maxX - antSize)), Math.floor(Math.random() * (screen.maxY - antSize)), velocities[Math.floor(Math.random() * 3)], velocities[Math.floor(Math.random() * 3)], antSize, "black");
+    var ant = createAnt(Math.floor(Math.random() * (screen.maxX - antSize)), Math.floor(Math.random() * (screen.maxY - antSize)), velocities[Math.floor(Math.random() * 2)], velocities[Math.floor(Math.random() * 2)], antSize, "black");
     var $ant = document.createElement("div");
     $ant.className = "ant";
     $ant.style.width = ant.size + "px";
@@ -76,10 +76,10 @@ function collisionWithAnotherAnt(ants){
     for(var i = 0; i < ants.length - 1; i++){
         for(var j = i + 1; j < ants.length; j++){
             if (Math.abs(ants[i].x - ants[j].x) * 2 < (ants[i].size + ants[j].size) && Math.abs(ants[i].y - ants[j].y) * 2 < (ants[i].size + ants[j].size)){
-                ants[i].dx = velocities[Math.floor(Math.random() * 3)];
-                ants[i].dy = velocities[Math.floor(Math.random() * 3)];
-                ants[j].dx = velocities[Math.floor(Math.random() * 3)];
-                ants[j].dy = velocities[Math.floor(Math.random() * 3)];
+                ants[i].dx = velocities[Math.floor(Math.random() * 2)];
+                ants[i].dy = velocities[Math.floor(Math.random() * 2)];
+                ants[j].dx = velocities[Math.floor(Math.random() * 2)];
+                ants[j].dy = velocities[Math.floor(Math.random() * 2)];
             }
         }
     }
@@ -101,4 +101,4 @@ setInterval(function() {
         updateAntPosition(ants[i], $ants[i]);
         collisionWithWall(ants[i]);
     }
-}, 1);
+}, 50);
