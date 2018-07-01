@@ -5,3 +5,4 @@ __Leapfrog Javascript Assignments__
 * [Assignment4](https://bipinmdr07.github.io/js-experiments/ast4/)  (Use of map, filter and reduce function) 
 * [Assignment5](https://bipinmdr07/github.io/js-experiments/ast5/) (Two ball collision)
 * [Assignment6](https://bipinmdr07/github.io/js-experiments/ast6/) (Ant Smasher with collider)
+* [Assignment7](https://bipinmdr07/github.io/js-experiments/ast6/) (Space Fighter)
