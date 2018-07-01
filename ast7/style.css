@@ -1,0 +1,67 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.main-wrapper {
+    background-color: bisque;
+    margin: 10px auto;
+    overflow: hidden;
+}
+
+.home-screen, .game-screen, .gameover-screen {
+    position: relative;
+    overflow: hidden;
+}
+
+.home-screen {
+    /* background-color: black; */
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.start-button {
+    margin-top: 500px;
+    padding: 10px 50px;
+}
+
+.game-screen {
+    /* background-color: black; */
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.scrolling-background {
+    background: url("./images/background.png");
+    /* margin-top: -1200px; */
+    background-size: 100%;
+    width: 100%;
+    height: 300%;
+}
+
+.player {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    background: url("./images//player.png") no-repeat center;
+    background-size: contain;
+}
+
+.bullet {
+    width: 10px;
+    height: 15px;
+    position: absolute;
+    margin-top: 0px;
+    background-color: white;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.enemy {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: url("./images/enemy.png") no-repeat center;
+    background-size: contain;
+}
