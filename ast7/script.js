@@ -103,9 +103,11 @@ function GameScreen(props) {
     this.parent = props.parent;
     this.components = {};
     this.$gameScreen = document.createElement('div');
+    this.$score = document.createElement('h1');
     this.components = {};
     this.enemies = [];
     this.bullets = [];
+    this.score = 0;
 
     var self = this;
 
@@ -114,6 +116,9 @@ function GameScreen(props) {
 
         self.parent.populateScreen("gameScreen", self);
         self.parent.$mainWrapper.appendChild(self.$gameScreen);
+        self.$score.className = "score";
+        self.$score.innerHTML = "Score: " + self.score;
+        self.$gameScreen.appendChild(self.$score);
     }
 
     this.pushComponent = function(key, value) {
@@ -136,6 +141,11 @@ function GameScreen(props) {
         self.$gameScreen.style.display = "none";
     }
 
+    this.addScore = function() {
+        self.score += 10;
+        self.$score.innerHTML = "Score: " + self.score;
+    }
+
     this.generateEnemies = function() {
         var enemy = new Enemy({
             parent: self,
@@ -146,11 +156,14 @@ function GameScreen(props) {
     this.detectCollisionBetweenPlayerAndEnemy = function() {
         if (self.enemies.length > 1) {
             if ((self.enemies[0].x == self.components.player.x && (self.enemies[0].y + 100) >= self.components.player.y) || (self.enemies[1].x == self.components.player.x && (self.enemies[1].y + 100) >= self.components.player.y)){
-                console.log("collision Detected");
+                // console.log("collision Detected");
+
                 // gameover
                 // console.log(self.enemies[0].x == self.components.player.x);
+                return true;
             }
         }
+        return false;
     }
 
     this.detectCollisionBetweenEnemyAndBullet = function() {
@@ -169,7 +182,6 @@ function GameScreen(props) {
 
     document.onkeydown = function(e) {
         e = e || window.event;
-        var disabledBulletFound = false;
 
         if (e.keyCode == '37') {
             self.components.player.setPlayerPosition('37');
@@ -255,10 +267,6 @@ function Player(props) {
         self.$player.style.top = self.y + 'px';
     }
 
-    this.killed = function() {
-
-    }
-
     this.setPlayerPosition = function(keyCode) {
         if (keyCode == '37') {
             if (self.x <= 0){
@@ -312,11 +320,9 @@ function Bullet(props){
     }
 
     this.destroyBullet = function() {
-        self.disabled = true;
         var index = self.parent.bullets.indexOf(self);
         self.$bullet.remove();
         self.parent.bullets.splice(index, 1);
-        // self.$bullet.style.top = "610px";
     }
 }
 
@@ -342,6 +348,7 @@ function Enemy(props) {
         var index = self.parent.enemies.indexOf(self);
         self.$enemy.remove();
         self.parent.enemies.splice(index, 1);
+        self.parent.addScore();
     }
 
     this.reduceHealth = function() {
@@ -370,6 +377,17 @@ function GameOverScreen(props) {
     this.$gameOverScreen = document.createElement('div');
 
     var self = this;
+
+    this.init = function() {
+        self.$gameOverScreen.className = 'gameover-screen';
+
+        var gameOverText = document.createElement('h1');
+        gameOverText.innerHTML ="GAME OVER";
+        self.$gameOverScreen.appendChild(gameOverText);
+
+        self.parent.$gameScreen.appendChild(self.$gameOverScreen);
+
+    }
     
     this.showGameOverScreen = function() {
         self.$gameOverScreen.style.display = 'block';
@@ -410,6 +428,9 @@ function GameController(props){
 
         self.homeScreen.init();
         self.startButton.init();
+
+        self.gameOverScreen.init();
+        // self.gameOverScreen.init()
     }
 
     self.startButton.$startButton.onclick = function() {
@@ -426,10 +447,14 @@ function GameController(props){
         self.enemy.init();
     }
 
-    this.id = null;
+    var initGameOverScreen = function() {
+        self.gameScreen.showGameOverScreen();
+    }
+
+    // this.id = null;
 
     var startGame = function() {
-        id = setInterval(function() {
+        var id = setInterval(function() {
             self.scrollingBackground.updateMarginTop();
             if (self.gameScreen.bullets.length > 0) {
                 self.gameScreen.bullets.forEach(function(bullet) {
@@ -447,8 +472,14 @@ function GameController(props){
                 self.gameScreen.generateEnemies();
             }
 
-            self.gameScreen.detectCollisionBetweenPlayerAndEnemy();
+            var gameOver = self.gameScreen.detectCollisionBetweenPlayerAndEnemy();
             self.gameScreen.detectCollisionBetweenEnemyAndBullet();
+
+            if (gameOver) {
+                clearInterval(id);
+                // self.gameScreen.hideGameScreen();
+                self.gameOverScreen.showGameOverScreen();
+            }
         }, 10);
     }
 }
@@ -494,11 +525,16 @@ var startButton = new StartButton({
     parent: homeScreen,
 });
 
+var gameOverScreen = new GameOverScreen({
+    parent: gameScreen,
+});
+
 var gameController = new GameController({
     mainWrapper: mainWrapper,
     startButton: startButton,
     homeScreen: homeScreen,
     gameScreen: gameScreen,
+    gameOverScreen: gameOverScreen,
     player: player,
     enemy: enemy,
     scrollingBackground: scrollingBackground,
