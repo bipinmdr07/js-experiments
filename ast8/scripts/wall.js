@@ -27,9 +27,6 @@ class Wall {
 
     updateWallPosition() {
         this.x -= this.velocity;
-        if (this.x < -this.width) {
-            this.destroyWall();
-        }
     }
 
     pushSelfToWalls(walls) {
@@ -37,7 +34,7 @@ class Wall {
     }
 
     destroyWall() {
-        
+        this.$element.remove();
     }
 }
 

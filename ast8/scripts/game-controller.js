@@ -46,15 +46,27 @@ class GameController {
 
         let id = setInterval(() => {
             if (this.startGameLoop) {
-                console.log("gameloop started")
+                // console.log(this.walls);
+
+                if (this.walls.length === 0 || this.walls[this.walls.length - 1].x < 600) {
+                    this.generateObstacles();
+                }
+
+                let indices = [];
 
                 this.walls.map((wall) => {
                     wall.updateWallPosition();
                     wall.renderWall();
+
+                    if (wall.x < -50) {
+                        indices.push(this.walls.indexOf(wall));
+                        wall.destroyWall();
+                        this.walls.splice(this.walls.indexOf(wall), 1);
+                    }
                 });
             }
         }, 10);
-        this.generateObstacles();
+        // this.generateObstacles();
 
         // clearInterval(id);
     }
@@ -64,7 +76,7 @@ class GameController {
         let lowerWallHeight = 600 - upperWallHeight - WALL_SPACE;
         let lowerWallY = upperWallHeight + WALL_SPACE;
         let upperWall = new UpperWall({
-            x: 500,
+            x: 1000,
             y: 0,
             velocity: 1,
             width: 50,
@@ -76,7 +88,7 @@ class GameController {
         upperWall.pushSelfToWalls(this.walls);
 
         let lowerWall = new LowerWall({
-            x: 500,
+            x: 1000,
             y: lowerWallY,
             velocity: 1,
             width: 50,
