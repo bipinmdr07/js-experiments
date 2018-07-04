@@ -1,17 +1,10 @@
-// const $mainWrappper = document.getElementById('main-wrapper');
-// const $homeScreen = document.getElementById('home-screen');
-// const $startBtn = document.getElementById('start-btn');
-// const $gameScreen = document.getElementById('game-screen');
-// const $gameOverScreen = document.getElementById('gameover-screen');
-// const $bird = document.getElementsByClassName('bird')[0];
-
-// const WALL_SPACE = 125;
-
 class GameController {
     constructor(props) {
         this.startGameLoop = false;
+        this.gamePaused = true;
         this.walls = [];
         this.wallSpace = 125;
+        this.scoreUpdated = false;
         this.init();  
     }
 
@@ -37,61 +30,90 @@ class GameController {
             $bird: this.getBird()
         });
 
-        this.startGame();
+        this.getResetButton().onclick = () => {
+            this.resetGame();
+        }
+
+        
+
+        this.getStartBtn().onclick = () => {
+            this.startGame();
+        }
+
+        this.startHomeScreen();
 
         window.onkeydown = (e) => {
             let key = e.keyCode ? e.keyCode : e.which;
+            console.log(e);
 
             if (key === 32 && !this.gamePaused) {
                 this.bird.setUpwardAcceleration();
             }
+
+            if (key === 27 && !this.gamePaused) {
+                this.pauseGame();
+            }
+
+            if (key === 27 && this.gamePaused) {
+                this.resumeGame();
+            }
         }
     }
 
+    startHomeScreen() {
+        this.homeScreen.showHomeScreen();
+        this.gameOverScreen.hideGameOverScreen();
+        this.gameOverScreen.hideGameOverScreen();
+    }
+
     startGame() {
-        this.getStartBtn().onclick = () => {
-            this.homeScreen.hideHomeScreen();
-            this.gameScreen.showGameScreen();
+        this.homeScreen.hideHomeScreen();
+        this.gameScreen.showGameScreen();
+        this.bird.y = 250;
+        this.bird.yVelocity = 0;
 
-            this.startGameLoop = true;
-            this.gamePaused = false;
-        }
+        this.gamePaused = false;
+        this.intervalManager(true);
+    }
 
-        let id = setInterval(() => {
-            if (!this.gamePaused) {
-
-                this.bird.updateBirdPosition();
-
-                if (this.walls.length === 0 || this.walls[this.walls.length - 1].x < 600) {
-                    this.generateObstacles();
-                }
-
-                this.walls.map((wall) => {
-                    wall.updateWallPosition();
-                    wall.renderWall();
-
-                    if (wall.x < -50) {
-                        wall.destroyWall();
-                        this.walls.splice(this.walls.indexOf(wall), 1);
+    intervalManager(flag) {
+        if (flag) {
+            let id = setInterval(() => {
+                if (!this.gamePaused) {
+                    this.bird.updateBirdPosition();
+    
+                    if (this.walls.length === 0 || this.walls[this.walls.length - 1].x < 600) {
+                        this.generateObstacles();
                     }
-                });
+    
+                    this.walls.map((wall) => {
+                        wall.updateWallPosition();
+                        wall.renderWall();
+    
+                        if (wall.x < -50) {
+                            wall.destroyWall();
+                            this.walls.splice(this.walls.indexOf(wall), 1);
+                            this.scoreUpdated = false;
+                        }
+                    });
+        
+                    if (this.bird.checkCollision(this.walls)){
+                        this.gamePaused = true;
+                        // case of game over
+                        this.gameOverScreen.showGameOverScreen();
+                        // console.log(this.gameOverScreen)
+                        // console.log(this.gameScreen);
+                    }
 
-
-            }
-
-            if (this.gamePaused) {
-                clearInterval(id);
-            }
-
-            if (this.bird.checkCollision(this.walls)){
-                this.gamePaused = true;
-                console.log("hello");
-            }
-
-            // if (!this.startGameLoop){
-            //     clearInterval(id);
-            // }
-        }, 10);
+                    if (this.walls[0].x + this.walls[0].width < this.bird.x && this.walls[1].x + this.walls[1].width < this.bird.x && !this.scoreUpdated && !this.scoreUpdated ) {
+                        this.gameScreen.updateScore();
+                        this.scoreUpdated = !this.scoreUpdated;
+                    }
+                }
+            }, 10);
+        } else {
+            clearInterval(id);
+        }
     }
 
     generateObstacles() {
@@ -121,20 +143,13 @@ class GameController {
         lowerWall.pushSelfToWalls(this.walls);
     }
 
-    pauseGame() {
+    resetGame() {
         this.gamePaused = true;
-    }
-
-    resumeGame() {
-        this.gamePaused = false;
-    }
-
-    restartGame() {
-
-    }
-
-    exitGame() {
-
+        this.walls.map((wall) => {
+            wall.$element.remove();
+        });
+        this.walls = [];
+        this.startHomeScreen();
     }
 
     // getters
@@ -146,28 +161,28 @@ class GameController {
         return document.getElementById('home-screen');
     }
 
-    // const $startBtn = document.getElementById('start-btn');
     getStartBtn() {
         return document.getElementById('start-btn');
     }
 
-    // const $gameScreen = document.getElementById('game-screen');
     getGameScreen() {
         return document.getElementById('game-screen');
     }
 
-    // const $gameOverScreen = document.getElementById('gameover-screen');
     getGameOverScreen() {
         return document.getElementById('gameover-screen');
     }
 
-    // const $bird = document.getElementsByClassName('bird')[0];
     getBird() {
         return document.getElementsByClassName('bird')[0];
     }
 
     getBorderBox() {
         return document.getElementsByClassName('border-box')[0];
+    }
+
+    getResetButton() {
+        return document.getElementById('reset-btn');
     }
 }
 

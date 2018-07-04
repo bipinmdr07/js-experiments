@@ -1,9 +1,10 @@
 class GameOverScreen {
-    consturctor(props) {
+    constructor(props) {
         this.$element = props.$element;
     }
 
     showGameOverScreen() {
+        console.log(this.$element);
         this.$element.style.display = "block";
     }
 

@@ -6,17 +6,23 @@
     </head>
     <body>
         <div class="main-wrapper" id="main-wrapper">
-            <div class="home-screen" id="home-screen">
-                <h1>FLAPPY BIRD</h1>
-                <button id="start-btn">Start</button>
-            </div>
-            <div class="game-screen" id="game-screen">
-                <div class="border-box">
-                    <div class="bird"></div>
+            <div class="content-wrapper">
+                <div class="home-screen" id="home-screen">
+                    <h1>FLAPPY BIRD</h1>
+                    <button id="start-btn">Start</button>
                 </div>
-                <div class="moving-ground"></div>
+                <div class="game-screen" id="game-screen">
+                    <h1 class="score"></h1>
+                    <div class="border-box">
+                        <div class="bird"></div>
+                    </div>
+                    <div class="moving-ground"></div>
+                </div>
+                <div class="gameover-screen" id="gameover-screen">
+                    <h1>GAME OVER</h1>
+                    <button id="reset-btn">Reset</button>
+                </div>
             </div>
-            <div class="gameover-screen" id="gameover-screen"></div>
         </div>
         <script src="./scripts/bird.js"></script>
         <script src="./scripts/game-over-screen.js"></script>

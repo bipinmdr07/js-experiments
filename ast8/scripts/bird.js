@@ -29,9 +29,7 @@ class Bird {
             this.y = 0;
         }
 
-        if (this.y + this.width > 600) {
-            this.y = 600 - this.width;
-        }
+        
         this.theta = Math.atan(netAddingTerm / this.xVelocity) * 180 / Math.PI;
 
         this.$element.style.top = this.y + 'px';
@@ -50,7 +48,10 @@ class Bird {
 
         if (this.x + this.width > topWall.x && this.y < topWall.y + topWall.height && this.x < topWall.x + topWall.width
             || this.x + this.width > bottomWall.x && this.y + this.width > bottomWall.y && this.x < bottomWall.x + bottomWall.width){
-            console.log("google");
+            return true;
+        }
+
+        if (this.y + this.width > 600) {
             return true;
         }
 
