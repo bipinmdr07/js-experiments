@@ -5,7 +5,8 @@ class GameController {
         this.walls = [];
         this.wallSpace = 125;
         this.scoreUpdated = false;
-        this.init();  
+        this.id = null;
+        this.init();
     }
 
     init() {
@@ -70,7 +71,8 @@ class GameController {
         this.homeScreen.hideHomeScreen();
         this.gameScreen.showGameScreen();
         this.bird.y = 250;
-        this.bird.yVelocity = 0;
+        // this.bird.yVelocity = 0;
+        this.bird.setUpwardAcceleration();
 
         this.gamePaused = false;
         this.intervalManager(true);
@@ -78,7 +80,8 @@ class GameController {
 
     intervalManager(flag) {
         if (flag) {
-            let id = setInterval(() => {
+            this.id = setInterval(() => {
+                console.log("google");
                 if (!this.gamePaused) {
                     this.bird.updateBirdPosition();
     
@@ -101,8 +104,7 @@ class GameController {
                         this.gamePaused = true;
                         // case of game over
                         this.gameOverScreen.showGameOverScreen();
-                        // console.log(this.gameOverScreen)
-                        // console.log(this.gameScreen);
+                        this.intervalManager(false);
                     }
 
                     if (this.walls[0].x + this.walls[0].width < this.bird.x && this.walls[1].x + this.walls[1].width < this.bird.x && !this.scoreUpdated && !this.scoreUpdated ) {
@@ -112,7 +114,7 @@ class GameController {
                 }
             }, 10);
         } else {
-            clearInterval(id);
+            clearInterval(this.id);
         }
     }
 
